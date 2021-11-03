@@ -101,6 +101,8 @@ output_fmt    [^%\n]+
 .                                   { throw yy::parser::syntax_error(loc, "invalid character: " + std::string(yytext)); }
 }
 
+\"[^\n]*\"                          return yy::parser::make_STRING(yytext, loc);
+
 "/*"                                { BEGIN(c_comment); }
 ","	                                return yy::parser::make_COMMA(loc);
 "::"                                return yy::parser::make_REVERSE(loc);
@@ -130,6 +132,7 @@ output_fmt    [^%\n]+
 ".side_set"		                    return yy::parser::make_SIDE_SET(loc);
 ".origin"		                    return yy::parser::make_ORIGIN(loc);
 ".lang_opt"         	            { BEGIN(lang_opt); return yy::parser::make_LANG_OPT(loc); }
+".include"			    return yy::parser::make_INCLUDE(loc);
 {directive}                         return yy::parser::make_UNKNOWN_DIRECTIVE(yytext, loc);
 
 "JMP"			                    return yy::parser::make_JMP(loc);
@@ -177,7 +180,11 @@ output_fmt    [^%\n]+
 "ONE"                               return yy::parser::make_INT(1, loc);
 "ZERO"                              return yy::parser::make_INT(0, loc);
 
-<<EOF>>                             return yy::parser::make_END(loc);
+<<EOF>>                             {
+				      yypop_buffer_state();
+				      if (!YY_CURRENT_BUFFER)
+				        return yy::parser::make_END(loc);
+				    }
 
 {int}                               return make_INT(yytext, loc);
 {hex}                               return make_HEX(yytext, loc);
@@ -233,4 +240,23 @@ void pio_assembler::scan_begin ()
 void pio_assembler::scan_end ()
 {
   fclose (yyin);
+}
+
+void pio_assembler::include_file(const std::string& isource)
+{
+  FILE *in;
+  size_t n = isource.size();
+  std::string path = isource.substr(1, n-2);
+  size_t lastslash = source.find_last_of('/');
+  if (lastslash != std::string::npos)
+    path = source.substr(0, lastslash) + "/" + path;
+  if (!(in = fopen (path.c_str (), "r")))
+    {
+      std::cerr << "cannot open \"" << path << "\": " << strerror(errno) << '\n';
+      exit (EXIT_FAILURE);
+    }
+  // We don't eat NL after .include directive yet. This makes parser happy.
+  ungetc('\n', in);
+  yypush_buffer_state(yy_new_buffer(in, YY_BUF_SIZE));
+  BEGIN(INITIAL);
 }

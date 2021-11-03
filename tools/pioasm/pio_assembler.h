@@ -95,6 +95,7 @@ public:
     // Handling the scanner.
     void scan_begin();
     void scan_end();
+    void include_file(const std::string &isource);
 
     // The token's location used by the scanner.
     yy::location location;

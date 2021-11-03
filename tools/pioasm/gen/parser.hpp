@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.7.2.
+// A Bison parser, made by GNU Bison 3.7.6.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // As a special exception, you may create a larger work that contains
 // part or all of the Bison parser skeleton and distribute that work
@@ -32,7 +32,7 @@
 
 
 /**
- ** \file pico_sdk/tools/pioasm/gen/parser.hpp
+ ** \file /git/pico-sdk/tools/pioasm/gen/parser.hpp
  ** Define the yy::parser class.
  */
 
@@ -42,13 +42,14 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_YY_HOME_GRAHAM_DEV_MU_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED
-# define YY_YY_HOME_GRAHAM_DEV_MU_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED
+#ifndef YY_YY_GIT_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED
+# define YY_YY_GIT_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED
 // "%code requires" blocks.
 
   #include <string>
   #include <fstream>
   #include <sstream>
+  #include <cstring>
   #include "pio_types.h"
   struct pio_assembler;
 
@@ -102,11 +103,6 @@
 #endif
 # include "location.h"
 
-#ifndef YY_ASSERT
-# include <cassert>
-# define YY_ASSERT assert
-#endif
-
 
 #ifndef YY_ATTRIBUTE_PURE
 # if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
@@ -126,9 +122,9 @@
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
@@ -218,7 +214,6 @@ namespace yy {
     template <typename T>
     semantic_type (YY_RVREF (T) t)
     {
-      YY_ASSERT (sizeof (T) <= size);
       new (yyas_<T> ()) T (YY_MOVE (t));
     }
 
@@ -505,46 +500,47 @@ namespace yy {
     TOK_WORD = 282,                // ".word"
     TOK_ORIGIN = 283,              // ".origin"
     TOK_LANG_OPT = 284,            // ".lang_opt"
-    TOK_JMP = 285,                 // "jmp"
-    TOK_WAIT = 286,                // "wait"
-    TOK_IN = 287,                  // "in"
-    TOK_OUT = 288,                 // "out"
-    TOK_PUSH = 289,                // "push"
-    TOK_PULL = 290,                // "pull"
-    TOK_MOV = 291,                 // "mov"
-    TOK_IRQ = 292,                 // "irq"
-    TOK_SET = 293,                 // "set"
-    TOK_NOP = 294,                 // "nop"
-    TOK_PIN = 295,                 // "pin"
-    TOK_GPIO = 296,                // "gpio"
-    TOK_OSRE = 297,                // "osre"
-    TOK_PINS = 298,                // "pins"
-    TOK_NULL = 299,                // "null"
-    TOK_PINDIRS = 300,             // "pindirs"
-    TOK_BLOCK = 301,               // "block"
-    TOK_NOBLOCK = 302,             // "noblock"
-    TOK_IFEMPTY = 303,             // "ifempty"
-    TOK_IFFULL = 304,              // "iffull"
-    TOK_NOWAIT = 305,              // "nowait"
-    TOK_CLEAR = 306,               // "clear"
-    TOK_REL = 307,                 // "rel"
-    TOK_X = 308,                   // "x"
-    TOK_Y = 309,                   // "y"
-    TOK_EXEC = 310,                // "exec"
-    TOK_PC = 311,                  // "pc"
-    TOK_ISR = 312,                 // "isr"
-    TOK_OSR = 313,                 // "osr"
-    TOK_OPTIONAL = 314,            // "opt"
-    TOK_SIDE = 315,                // "side"
-    TOK_STATUS = 316,              // "status"
-    TOK_PUBLIC = 317,              // "public"
-    TOK_ID = 318,                  // "identifier"
-    TOK_STRING = 319,              // "string"
-    TOK_NON_WS = 320,              // "text"
-    TOK_CODE_BLOCK_START = 321,    // "code block"
-    TOK_CODE_BLOCK_CONTENTS = 322, // "%}"
-    TOK_UNKNOWN_DIRECTIVE = 323,   // UNKNOWN_DIRECTIVE
-    TOK_INT = 324                  // "integer"
+    TOK_INCLUDE = 285,             // ".include"
+    TOK_JMP = 286,                 // "jmp"
+    TOK_WAIT = 287,                // "wait"
+    TOK_IN = 288,                  // "in"
+    TOK_OUT = 289,                 // "out"
+    TOK_PUSH = 290,                // "push"
+    TOK_PULL = 291,                // "pull"
+    TOK_MOV = 292,                 // "mov"
+    TOK_IRQ = 293,                 // "irq"
+    TOK_SET = 294,                 // "set"
+    TOK_NOP = 295,                 // "nop"
+    TOK_PIN = 296,                 // "pin"
+    TOK_GPIO = 297,                // "gpio"
+    TOK_OSRE = 298,                // "osre"
+    TOK_PINS = 299,                // "pins"
+    TOK_NULL = 300,                // "null"
+    TOK_PINDIRS = 301,             // "pindirs"
+    TOK_BLOCK = 302,               // "block"
+    TOK_NOBLOCK = 303,             // "noblock"
+    TOK_IFEMPTY = 304,             // "ifempty"
+    TOK_IFFULL = 305,              // "iffull"
+    TOK_NOWAIT = 306,              // "nowait"
+    TOK_CLEAR = 307,               // "clear"
+    TOK_REL = 308,                 // "rel"
+    TOK_X = 309,                   // "x"
+    TOK_Y = 310,                   // "y"
+    TOK_EXEC = 311,                // "exec"
+    TOK_PC = 312,                  // "pc"
+    TOK_ISR = 313,                 // "isr"
+    TOK_OSR = 314,                 // "osr"
+    TOK_OPTIONAL = 315,            // "opt"
+    TOK_SIDE = 316,                // "side"
+    TOK_STATUS = 317,              // "status"
+    TOK_PUBLIC = 318,              // "public"
+    TOK_ID = 319,                  // "identifier"
+    TOK_STRING = 320,              // "string"
+    TOK_NON_WS = 321,              // "text"
+    TOK_CODE_BLOCK_START = 322,    // "code block"
+    TOK_CODE_BLOCK_CONTENTS = 323, // "%}"
+    TOK_UNKNOWN_DIRECTIVE = 324,   // UNKNOWN_DIRECTIVE
+    TOK_INT = 325                  // "integer"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -561,7 +557,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 70, ///< Number of tokens.
+        YYNTOKENS = 71, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -593,73 +589,74 @@ namespace yy {
         S_WORD = 27,                             // ".word"
         S_ORIGIN = 28,                           // ".origin"
         S_LANG_OPT = 29,                         // ".lang_opt"
-        S_JMP = 30,                              // "jmp"
-        S_WAIT = 31,                             // "wait"
-        S_IN = 32,                               // "in"
-        S_OUT = 33,                              // "out"
-        S_PUSH = 34,                             // "push"
-        S_PULL = 35,                             // "pull"
-        S_MOV = 36,                              // "mov"
-        S_IRQ = 37,                              // "irq"
-        S_SET = 38,                              // "set"
-        S_NOP = 39,                              // "nop"
-        S_PIN = 40,                              // "pin"
-        S_GPIO = 41,                             // "gpio"
-        S_OSRE = 42,                             // "osre"
-        S_PINS = 43,                             // "pins"
-        S_NULL = 44,                             // "null"
-        S_PINDIRS = 45,                          // "pindirs"
-        S_BLOCK = 46,                            // "block"
-        S_NOBLOCK = 47,                          // "noblock"
-        S_IFEMPTY = 48,                          // "ifempty"
-        S_IFFULL = 49,                           // "iffull"
-        S_NOWAIT = 50,                           // "nowait"
-        S_CLEAR = 51,                            // "clear"
-        S_REL = 52,                              // "rel"
-        S_X = 53,                                // "x"
-        S_Y = 54,                                // "y"
-        S_EXEC = 55,                             // "exec"
-        S_PC = 56,                               // "pc"
-        S_ISR = 57,                              // "isr"
-        S_OSR = 58,                              // "osr"
-        S_OPTIONAL = 59,                         // "opt"
-        S_SIDE = 60,                             // "side"
-        S_STATUS = 61,                           // "status"
-        S_PUBLIC = 62,                           // "public"
-        S_ID = 63,                               // "identifier"
-        S_STRING = 64,                           // "string"
-        S_NON_WS = 65,                           // "text"
-        S_CODE_BLOCK_START = 66,                 // "code block"
-        S_CODE_BLOCK_CONTENTS = 67,              // "%}"
-        S_UNKNOWN_DIRECTIVE = 68,                // UNKNOWN_DIRECTIVE
-        S_INT = 69,                              // "integer"
-        S_YYACCEPT = 70,                         // $accept
-        S_file = 71,                             // file
-        S_lines = 72,                            // lines
-        S_line = 73,                             // line
-        S_code_block = 74,                       // code_block
-        S_label_decl = 75,                       // label_decl
-        S_directive = 76,                        // directive
-        S_value = 77,                            // value
-        S_expression = 78,                       // expression
-        S_instruction = 79,                      // instruction
-        S_base_instruction = 80,                 // base_instruction
-        S_delay = 81,                            // delay
-        S_sideset = 82,                          // sideset
-        S_condition = 83,                        // condition
-        S_wait_source = 84,                      // wait_source
-        S_comma = 85,                            // comma
-        S_in_source = 86,                        // in_source
-        S_out_target = 87,                       // out_target
-        S_mov_target = 88,                       // mov_target
-        S_mov_source = 89,                       // mov_source
-        S_mov_op = 90,                           // mov_op
-        S_set_target = 91,                       // set_target
-        S_if_full = 92,                          // if_full
-        S_if_empty = 93,                         // if_empty
-        S_blocking = 94,                         // blocking
-        S_irq_modifiers = 95,                    // irq_modifiers
-        S_symbol_def = 96                        // symbol_def
+        S_INCLUDE = 30,                          // ".include"
+        S_JMP = 31,                              // "jmp"
+        S_WAIT = 32,                             // "wait"
+        S_IN = 33,                               // "in"
+        S_OUT = 34,                              // "out"
+        S_PUSH = 35,                             // "push"
+        S_PULL = 36,                             // "pull"
+        S_MOV = 37,                              // "mov"
+        S_IRQ = 38,                              // "irq"
+        S_SET = 39,                              // "set"
+        S_NOP = 40,                              // "nop"
+        S_PIN = 41,                              // "pin"
+        S_GPIO = 42,                             // "gpio"
+        S_OSRE = 43,                             // "osre"
+        S_PINS = 44,                             // "pins"
+        S_NULL = 45,                             // "null"
+        S_PINDIRS = 46,                          // "pindirs"
+        S_BLOCK = 47,                            // "block"
+        S_NOBLOCK = 48,                          // "noblock"
+        S_IFEMPTY = 49,                          // "ifempty"
+        S_IFFULL = 50,                           // "iffull"
+        S_NOWAIT = 51,                           // "nowait"
+        S_CLEAR = 52,                            // "clear"
+        S_REL = 53,                              // "rel"
+        S_X = 54,                                // "x"
+        S_Y = 55,                                // "y"
+        S_EXEC = 56,                             // "exec"
+        S_PC = 57,                               // "pc"
+        S_ISR = 58,                              // "isr"
+        S_OSR = 59,                              // "osr"
+        S_OPTIONAL = 60,                         // "opt"
+        S_SIDE = 61,                             // "side"
+        S_STATUS = 62,                           // "status"
+        S_PUBLIC = 63,                           // "public"
+        S_ID = 64,                               // "identifier"
+        S_STRING = 65,                           // "string"
+        S_NON_WS = 66,                           // "text"
+        S_CODE_BLOCK_START = 67,                 // "code block"
+        S_CODE_BLOCK_CONTENTS = 68,              // "%}"
+        S_UNKNOWN_DIRECTIVE = 69,                // UNKNOWN_DIRECTIVE
+        S_INT = 70,                              // "integer"
+        S_YYACCEPT = 71,                         // $accept
+        S_file = 72,                             // file
+        S_lines = 73,                            // lines
+        S_line = 74,                             // line
+        S_code_block = 75,                       // code_block
+        S_label_decl = 76,                       // label_decl
+        S_directive = 77,                        // directive
+        S_value = 78,                            // value
+        S_expression = 79,                       // expression
+        S_instruction = 80,                      // instruction
+        S_base_instruction = 81,                 // base_instruction
+        S_delay = 82,                            // delay
+        S_sideset = 83,                          // sideset
+        S_condition = 84,                        // condition
+        S_wait_source = 85,                      // wait_source
+        S_comma = 86,                            // comma
+        S_in_source = 87,                        // in_source
+        S_out_target = 88,                       // out_target
+        S_mov_target = 89,                       // mov_target
+        S_mov_source = 90,                       // mov_source
+        S_mov_op = 91,                           // mov_op
+        S_set_target = 92,                       // set_target
+        S_if_full = 93,                          // if_full
+        S_if_empty = 94,                         // if_empty
+        S_blocking = 95,                         // blocking
+        S_irq_modifiers = 96,                    // irq_modifiers
+        S_symbol_def = 97                        // symbol_def
       };
     };
 
@@ -769,7 +766,7 @@ namespace yy {
       /// Copy constructor.
       basic_symbol (const basic_symbol& that);
 
-      /// Constructor for valueless symbols, and symbols from each type.
+      /// Constructors for typed symbols.
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, location_type&& l)
         : Base (t)
@@ -781,6 +778,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, bool&& v, location_type&& l)
         : Base (t)
@@ -794,6 +792,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, enum condition&& v, location_type&& l)
         : Base (t)
@@ -807,6 +806,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, enum in_out_set&& v, location_type&& l)
         : Base (t)
@@ -820,6 +820,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, enum irq&& v, location_type&& l)
         : Base (t)
@@ -833,6 +834,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, enum mov&& v, location_type&& l)
         : Base (t)
@@ -846,6 +848,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, enum mov_op&& v, location_type&& l)
         : Base (t)
@@ -859,6 +862,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, int&& v, location_type&& l)
         : Base (t)
@@ -872,6 +876,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::shared_ptr<instruction>&& v, location_type&& l)
         : Base (t)
@@ -885,6 +890,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::shared_ptr<resolvable>&& v, location_type&& l)
         : Base (t)
@@ -898,6 +904,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::shared_ptr<symbol>&& v, location_type&& l)
         : Base (t)
@@ -911,6 +918,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::shared_ptr<wait_source>&& v, location_type&& l)
         : Base (t)
@@ -924,6 +932,7 @@ namespace yy {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
@@ -945,7 +954,7 @@ namespace yy {
       }
 
       /// Destroy contents, and record that is empty.
-      void clear ()
+      void clear () YY_NOEXCEPT
       {
         // User destructor.
         symbol_kind_type yykind = this->kind ();
@@ -1079,7 +1088,7 @@ switch (yykind)
       by_kind (kind_type t);
 
       /// Record that this symbol is empty.
-      void clear ();
+      void clear () YY_NOEXCEPT;
 
       /// Steal the symbol kind from \a that.
       void move (by_kind& that);
@@ -1112,42 +1121,27 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, location_type l)
         : super_type(token_type (tok), std::move (l))
-      {
-        YY_ASSERT (tok == token::TOK_END || tok == token::TOK_YYerror || tok == token::TOK_YYUNDEF || tok == token::TOK_NEWLINE || tok == token::TOK_COMMA || tok == token::TOK_COLON || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_LBRACKET || tok == token::TOK_RBRACKET || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_MULTIPLY || tok == token::TOK_DIVIDE || tok == token::TOK_OR || tok == token::TOK_AND || tok == token::TOK_XOR || tok == token::TOK_POST_DECREMENT || tok == token::TOK_NOT_EQUAL || tok == token::TOK_NOT || tok == token::TOK_REVERSE || tok == token::TOK_EQUAL || tok == token::TOK_PROGRAM || tok == token::TOK_WRAP_TARGET || tok == token::TOK_WRAP || tok == token::TOK_DEFINE || tok == token::TOK_SIDE_SET || tok == token::TOK_WORD || tok == token::TOK_ORIGIN || tok == token::TOK_LANG_OPT || tok == token::TOK_JMP || tok == token::TOK_WAIT || tok == token::TOK_IN || tok == token::TOK_OUT || tok == token::TOK_PUSH || tok == token::TOK_PULL || tok == token::TOK_MOV || tok == token::TOK_IRQ || tok == token::TOK_SET || tok == token::TOK_NOP || tok == token::TOK_PIN || tok == token::TOK_GPIO || tok == token::TOK_OSRE || tok == token::TOK_PINS || tok == token::TOK_NULL || tok == token::TOK_PINDIRS || tok == token::TOK_BLOCK || tok == token::TOK_NOBLOCK || tok == token::TOK_IFEMPTY || tok == token::TOK_IFFULL || tok == token::TOK_NOWAIT || tok == token::TOK_CLEAR || tok == token::TOK_REL || tok == token::TOK_X || tok == token::TOK_Y || tok == token::TOK_EXEC || tok == token::TOK_PC || tok == token::TOK_ISR || tok == token::TOK_OSR || tok == token::TOK_OPTIONAL || tok == token::TOK_SIDE || tok == token::TOK_STATUS || tok == token::TOK_PUBLIC);
-      }
 #else
       symbol_type (int tok, const location_type& l)
         : super_type(token_type (tok), l)
-      {
-        YY_ASSERT (tok == token::TOK_END || tok == token::TOK_YYerror || tok == token::TOK_YYUNDEF || tok == token::TOK_NEWLINE || tok == token::TOK_COMMA || tok == token::TOK_COLON || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_LBRACKET || tok == token::TOK_RBRACKET || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_MULTIPLY || tok == token::TOK_DIVIDE || tok == token::TOK_OR || tok == token::TOK_AND || tok == token::TOK_XOR || tok == token::TOK_POST_DECREMENT || tok == token::TOK_NOT_EQUAL || tok == token::TOK_NOT || tok == token::TOK_REVERSE || tok == token::TOK_EQUAL || tok == token::TOK_PROGRAM || tok == token::TOK_WRAP_TARGET || tok == token::TOK_WRAP || tok == token::TOK_DEFINE || tok == token::TOK_SIDE_SET || tok == token::TOK_WORD || tok == token::TOK_ORIGIN || tok == token::TOK_LANG_OPT || tok == token::TOK_JMP || tok == token::TOK_WAIT || tok == token::TOK_IN || tok == token::TOK_OUT || tok == token::TOK_PUSH || tok == token::TOK_PULL || tok == token::TOK_MOV || tok == token::TOK_IRQ || tok == token::TOK_SET || tok == token::TOK_NOP || tok == token::TOK_PIN || tok == token::TOK_GPIO || tok == token::TOK_OSRE || tok == token::TOK_PINS || tok == token::TOK_NULL || tok == token::TOK_PINDIRS || tok == token::TOK_BLOCK || tok == token::TOK_NOBLOCK || tok == token::TOK_IFEMPTY || tok == token::TOK_IFFULL || tok == token::TOK_NOWAIT || tok == token::TOK_CLEAR || tok == token::TOK_REL || tok == token::TOK_X || tok == token::TOK_Y || tok == token::TOK_EXEC || tok == token::TOK_PC || tok == token::TOK_ISR || tok == token::TOK_OSR || tok == token::TOK_OPTIONAL || tok == token::TOK_SIDE || tok == token::TOK_STATUS || tok == token::TOK_PUBLIC);
-      }
 #endif
+      {}
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, int v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
-      {
-        YY_ASSERT (tok == token::TOK_INT);
-      }
 #else
       symbol_type (int tok, const int& v, const location_type& l)
         : super_type(token_type (tok), v, l)
-      {
-        YY_ASSERT (tok == token::TOK_INT);
-      }
 #endif
+      {}
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
-      {
-        YY_ASSERT (tok == token::TOK_ID || tok == token::TOK_STRING || tok == token::TOK_NON_WS || tok == token::TOK_CODE_BLOCK_START || tok == token::TOK_CODE_BLOCK_CONTENTS || tok == token::TOK_UNKNOWN_DIRECTIVE);
-      }
 #else
       symbol_type (int tok, const std::string& v, const location_type& l)
         : super_type(token_type (tok), v, l)
-      {
-        YY_ASSERT (tok == token::TOK_ID || tok == token::TOK_STRING || tok == token::TOK_NON_WS || tok == token::TOK_CODE_BLOCK_START || tok == token::TOK_CODE_BLOCK_CONTENTS || tok == token::TOK_UNKNOWN_DIRECTIVE);
-      }
 #endif
+      {}
     };
 
     /// Build a parser object.
@@ -1644,6 +1638,21 @@ switch (yykind)
       make_LANG_OPT (const location_type& l)
       {
         return symbol_type (token::TOK_LANG_OPT, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_INCLUDE (location_type l)
+      {
+        return symbol_type (token::TOK_INCLUDE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_INCLUDE (const location_type& l)
+      {
+        return symbol_type (token::TOK_INCLUDE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2252,9 +2261,9 @@ switch (yykind)
     {
     public:
       context (const parser& yyparser, const symbol_type& yyla);
-      const symbol_type& lookahead () const { return yyla_; }
-      symbol_kind_type token () const { return yyla_.kind (); }
-      const location_type& location () const { return yyla_.location; }
+      const symbol_type& lookahead () const YY_NOEXCEPT { return yyla_; }
+      symbol_kind_type token () const YY_NOEXCEPT { return yyla_.kind (); }
+      const location_type& location () const YY_NOEXCEPT { return yyla_.location; }
 
       /// Put in YYARG at most YYARGN of the expected tokens, and return the
       /// number of tokens stored in YYARG.  If YYARG is null, return the
@@ -2337,7 +2346,7 @@ switch (yykind)
     static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
-    static const short yydefgoto_[];
+    static const unsigned char yydefgoto_[];
 
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
@@ -2595,9 +2604,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 205,     ///< Last index in yytable_.
+      yylast_ = 207,     ///< Last index in yytable_.
       yynnts_ = 27,  ///< Number of nonterminal symbols.
-      yyfinal_ = 96 ///< Termination state number.
+      yyfinal_ = 98 ///< Termination state number.
     };
 
 
@@ -2648,10 +2657,10 @@ switch (yykind)
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    66,    67,    68,    69
+      65,    66,    67,    68,    69,    70
     };
     // Last valid token kind.
-    const int code_max = 324;
+    const int code_max = 325;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2859,7 +2868,7 @@ switch (yykind)
 
   inline
   void
-  parser::by_kind::clear ()
+  parser::by_kind::clear () YY_NOEXCEPT
   {
     kind_ = symbol_kind::S_YYEMPTY;
   }
@@ -2891,4 +2900,4 @@ switch (yykind)
 
 
 
-#endif // !YY_YY_HOME_GRAHAM_DEV_MU_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED
+#endif // !YY_YY_GIT_PICO_SDK_TOOLS_PIOASM_GEN_PARSER_HPP_INCLUDED

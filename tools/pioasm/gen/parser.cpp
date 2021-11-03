@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.7.2.
+// A Bison parser, made by GNU Bison 3.7.6.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // As a special exception, you may create a larger work that contains
 // part or all of the Bison parser skeleton and distribute that work
@@ -124,7 +124,7 @@
 #else // !YYDEBUG
 
 # define YYCDEBUG if (false) std::cerr
-# define YY_SYMBOL_PRINT(Title, Symbol)  YYUSE (Symbol)
+# define YY_SYMBOL_PRINT(Title, Symbol)  YY_USE (Symbol)
 # define YY_REDUCE_PRINT(Rule)           static_cast<void> (0)
 # define YY_STACK_PRINT()                static_cast<void> (0)
 
@@ -528,7 +528,7 @@ namespace yy {
   parser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
   {
     std::ostream& yyoutput = yyo;
-    YYUSE (yyoutput);
+    YY_USE (yyoutput);
     if (yysym.empty ())
       yyo << "empty symbol";
     else
@@ -968,7 +968,7 @@ namespace yy {
           switch (yyn)
             {
   case 2: // file: lines "end of file"
-              { if (pioasm.error_count || pioasm.write_output()) YYABORT; }
+              { if (pioasm.error_count || pioasm.write_output()) YYABORT; YYACCEPT; }
     break;
 
   case 5: // line: ".program" "identifier"
@@ -1051,391 +1051,395 @@ namespace yy {
                                       { error(yylhs.location, "expected format is .lang_opt language option_name = option_value"); }
     break;
 
-  case 28: // directive: UNKNOWN_DIRECTIVE
+  case 28: // directive: ".include" "string"
+                                      { pioasm.include_file(yystack_[0].value.as < std::string > ()); }
+    break;
+
+  case 29: // directive: UNKNOWN_DIRECTIVE
                                       { std::stringstream msg; msg << "unknown directive " << yystack_[0].value.as < std::string > (); throw syntax_error(yylhs.location, msg.str()); }
     break;
 
-  case 29: // value: "integer"
+  case 30: // value: "integer"
            { yylhs.value.as < std::shared_ptr<resolvable> > () = resolvable_int(yylhs.location, yystack_[0].value.as < int > ()); }
     break;
 
-  case 30: // value: "identifier"
+  case 31: // value: "identifier"
           { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<resolvable>(new name_ref(yylhs.location, yystack_[0].value.as < std::string > ())); }
     break;
 
-  case 31: // value: "(" expression ")"
+  case 32: // value: "(" expression ")"
                                 { yylhs.value.as < std::shared_ptr<resolvable> > () = yystack_[1].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 32: // expression: value
+  case 33: // expression: value
      { yylhs.value.as < std::shared_ptr<resolvable> > () = yystack_[0].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 33: // expression: expression "+" expression
+  case 34: // expression: expression "+" expression
                                   { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::add, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 34: // expression: expression "-" expression
+  case 35: // expression: expression "-" expression
                                    { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::subtract, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 35: // expression: expression "*" expression
+  case 36: // expression: expression "*" expression
                                       { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::multiply, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ()));  }
     break;
 
-  case 36: // expression: expression "/" expression
+  case 37: // expression: expression "/" expression
                                     { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::divide, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 37: // expression: expression "|" expression
+  case 38: // expression: expression "|" expression
                                 { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::or_, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 38: // expression: expression "&" expression
+  case 39: // expression: expression "&" expression
                                  { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::and_, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 39: // expression: expression "^" expression
+  case 40: // expression: expression "^" expression
                                  { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<binary_operation>(new binary_operation(yylhs.location, binary_operation::xor_, yystack_[2].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 40: // expression: "-" expression
+  case 41: // expression: "-" expression
                         { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<unary_operation>(new unary_operation(yylhs.location, unary_operation::negate, yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 41: // expression: "::" expression
+  case 42: // expression: "::" expression
                           { yylhs.value.as < std::shared_ptr<resolvable> > () = std::shared_ptr<unary_operation>(new unary_operation(yylhs.location, unary_operation::reverse, yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 42: // instruction: base_instruction sideset delay
+  case 43: // instruction: base_instruction sideset delay
                                    { yylhs.value.as < std::shared_ptr<instruction> > () = yystack_[2].value.as < std::shared_ptr<instruction> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->sideset = yystack_[1].value.as < std::shared_ptr<resolvable> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->delay = yystack_[0].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 43: // instruction: base_instruction delay sideset
+  case 44: // instruction: base_instruction delay sideset
                                    { yylhs.value.as < std::shared_ptr<instruction> > () = yystack_[2].value.as < std::shared_ptr<instruction> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->delay = yystack_[1].value.as < std::shared_ptr<resolvable> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->sideset = yystack_[0].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 44: // instruction: base_instruction sideset
+  case 45: // instruction: base_instruction sideset
                              { yylhs.value.as < std::shared_ptr<instruction> > () = yystack_[1].value.as < std::shared_ptr<instruction> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->sideset = yystack_[0].value.as < std::shared_ptr<resolvable> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->delay = resolvable_int(yylhs.location, 0); }
     break;
 
-  case 45: // instruction: base_instruction delay
+  case 46: // instruction: base_instruction delay
                            { yylhs.value.as < std::shared_ptr<instruction> > () = yystack_[1].value.as < std::shared_ptr<instruction> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->delay = yystack_[0].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 46: // instruction: base_instruction
+  case 47: // instruction: base_instruction
                      { yylhs.value.as < std::shared_ptr<instruction> > () = yystack_[0].value.as < std::shared_ptr<instruction> > (); yylhs.value.as < std::shared_ptr<instruction> > ()->delay = resolvable_int(yylhs.location, 0); }
     break;
 
-  case 47: // base_instruction: "nop"
+  case 48: // base_instruction: "nop"
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_nop(yylhs.location)); }
     break;
 
-  case 48: // base_instruction: "jmp" condition comma expression
+  case 49: // base_instruction: "jmp" condition comma expression
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_jmp(yylhs.location, yystack_[2].value.as < enum condition > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 49: // base_instruction: "wait" value wait_source
+  case 50: // base_instruction: "wait" value wait_source
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_wait(yylhs.location, yystack_[1].value.as < std::shared_ptr<resolvable> > (), yystack_[0].value.as < std::shared_ptr<wait_source> > ())); }
     break;
 
-  case 50: // base_instruction: "wait" value "," value
+  case 51: // base_instruction: "wait" value "," value
                                                           { std::stringstream msg; location l; l.begin = yystack_[2].location.end; l.end = yystack_[1].location.end; msg << "expected irq, gpio or pin after the polarity value and before the \",\""; throw yy::parser::syntax_error(l, msg.str()); }
     break;
 
-  case 51: // base_instruction: "wait" wait_source
+  case 52: // base_instruction: "wait" wait_source
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_wait(yylhs.location, resolvable_int(yylhs.location, 1),  yystack_[0].value.as < std::shared_ptr<wait_source> > ())); }
     break;
 
-  case 52: // base_instruction: "in" in_source comma value
+  case 53: // base_instruction: "in" in_source comma value
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_in(yylhs.location, yystack_[2].value.as < enum in_out_set > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 53: // base_instruction: "out" out_target comma value
+  case 54: // base_instruction: "out" out_target comma value
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_out(yylhs.location, yystack_[2].value.as < enum in_out_set > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 54: // base_instruction: "push" if_full blocking
+  case 55: // base_instruction: "push" if_full blocking
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_push(yylhs.location, yystack_[1].value.as < bool > (), yystack_[0].value.as < bool > ())); }
     break;
 
-  case 55: // base_instruction: "pull" if_empty blocking
+  case 56: // base_instruction: "pull" if_empty blocking
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_pull(yylhs.location, yystack_[1].value.as < bool > (), yystack_[0].value.as < bool > ())); }
     break;
 
-  case 56: // base_instruction: "mov" mov_target comma mov_op mov_source
+  case 57: // base_instruction: "mov" mov_target comma mov_op mov_source
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_mov(yylhs.location, yystack_[3].value.as < enum mov > (), yystack_[0].value.as < enum mov > (), yystack_[1].value.as < enum mov_op > ())); }
     break;
 
-  case 57: // base_instruction: "irq" irq_modifiers value "rel"
+  case 58: // base_instruction: "irq" irq_modifiers value "rel"
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_irq(yylhs.location, yystack_[2].value.as < enum irq > (), yystack_[1].value.as < std::shared_ptr<resolvable> > (), true)); }
     break;
 
-  case 58: // base_instruction: "irq" irq_modifiers value
+  case 59: // base_instruction: "irq" irq_modifiers value
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_irq(yylhs.location, yystack_[1].value.as < enum irq > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 59: // base_instruction: "set" set_target comma value
+  case 60: // base_instruction: "set" set_target comma value
                                                           { yylhs.value.as < std::shared_ptr<instruction> > () = std::shared_ptr<instruction>(new instr_set(yylhs.location, yystack_[2].value.as < enum in_out_set > (), yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 60: // delay: "[" expression "]"
+  case 61: // delay: "[" expression "]"
                                  { yylhs.value.as < std::shared_ptr<resolvable> > () = yystack_[1].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 61: // sideset: "side" value
+  case 62: // sideset: "side" value
                { yylhs.value.as < std::shared_ptr<resolvable> > () = yystack_[0].value.as < std::shared_ptr<resolvable> > (); }
     break;
 
-  case 62: // condition: "!" "x"
+  case 63: // condition: "!" "x"
                             { yylhs.value.as < enum condition > () = condition::xz; }
     break;
 
-  case 63: // condition: "x" "--"
+  case 64: // condition: "x" "--"
                             { yylhs.value.as < enum condition > () = condition::xnz__; }
     break;
 
-  case 64: // condition: "!" "y"
+  case 65: // condition: "!" "y"
                             { yylhs.value.as < enum condition > () = condition::yz; }
     break;
 
-  case 65: // condition: "y" "--"
+  case 66: // condition: "y" "--"
                             { yylhs.value.as < enum condition > () = condition::ynz__; }
     break;
 
-  case 66: // condition: "x" "!=" "y"
+  case 67: // condition: "x" "!=" "y"
                             { yylhs.value.as < enum condition > () = condition::xney; }
     break;
 
-  case 67: // condition: "pin"
+  case 68: // condition: "pin"
                             { yylhs.value.as < enum condition > () = condition::pin; }
     break;
 
-  case 68: // condition: "!" "osre"
+  case 69: // condition: "!" "osre"
                             { yylhs.value.as < enum condition > () = condition::osrez; }
     break;
 
-  case 69: // condition: %empty
+  case 70: // condition: %empty
                             { yylhs.value.as < enum condition > () = condition::al; }
     break;
 
-  case 70: // wait_source: "irq" comma value "rel"
+  case 71: // wait_source: "irq" comma value "rel"
                             { yylhs.value.as < std::shared_ptr<wait_source> > () = std::shared_ptr<wait_source>(new wait_source(wait_source::irq, yystack_[1].value.as < std::shared_ptr<resolvable> > (), true)); }
     break;
 
-  case 71: // wait_source: "irq" comma value
+  case 72: // wait_source: "irq" comma value
                             { yylhs.value.as < std::shared_ptr<wait_source> > () = std::shared_ptr<wait_source>(new wait_source(wait_source::irq, yystack_[0].value.as < std::shared_ptr<resolvable> > (), false)); }
     break;
 
-  case 72: // wait_source: "gpio" comma value
+  case 73: // wait_source: "gpio" comma value
                             { yylhs.value.as < std::shared_ptr<wait_source> > () = std::shared_ptr<wait_source>(new wait_source(wait_source::gpio, yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 73: // wait_source: "pin" comma value
+  case 74: // wait_source: "pin" comma value
                             { yylhs.value.as < std::shared_ptr<wait_source> > () = std::shared_ptr<wait_source>(new wait_source(wait_source::pin, yystack_[0].value.as < std::shared_ptr<resolvable> > ())); }
     break;
 
-  case 76: // in_source: "pins"
+  case 77: // in_source: "pins"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_pins; }
     break;
 
-  case 77: // in_source: "x"
+  case 78: // in_source: "x"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_x; }
     break;
 
-  case 78: // in_source: "y"
+  case 79: // in_source: "y"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_y; }
     break;
 
-  case 79: // in_source: "null"
+  case 80: // in_source: "null"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_null; }
     break;
 
-  case 80: // in_source: "isr"
+  case 81: // in_source: "isr"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_isr; }
     break;
 
-  case 81: // in_source: "osr"
+  case 82: // in_source: "osr"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_osr; }
     break;
 
-  case 82: // in_source: "status"
+  case 83: // in_source: "status"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_status; }
     break;
 
-  case 83: // out_target: "pins"
+  case 84: // out_target: "pins"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_pins; }
     break;
 
-  case 84: // out_target: "x"
+  case 85: // out_target: "x"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_x; }
     break;
 
-  case 85: // out_target: "y"
+  case 86: // out_target: "y"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_y; }
     break;
 
-  case 86: // out_target: "null"
+  case 87: // out_target: "null"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_null; }
     break;
 
-  case 87: // out_target: "pindirs"
+  case 88: // out_target: "pindirs"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_pindirs; }
     break;
 
-  case 88: // out_target: "isr"
+  case 89: // out_target: "isr"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_isr; }
     break;
 
-  case 89: // out_target: "pc"
+  case 90: // out_target: "pc"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::out_set_pc; }
     break;
 
-  case 90: // out_target: "exec"
+  case 91: // out_target: "exec"
                  { yylhs.value.as < enum in_out_set > () = in_out_set::out_exec; }
     break;
 
-  case 91: // mov_target: "pins"
+  case 92: // mov_target: "pins"
                  { yylhs.value.as < enum mov > () = mov::pins; }
     break;
 
-  case 92: // mov_target: "x"
+  case 93: // mov_target: "x"
                  { yylhs.value.as < enum mov > () = mov::x; }
     break;
 
-  case 93: // mov_target: "y"
+  case 94: // mov_target: "y"
                  { yylhs.value.as < enum mov > () = mov::y; }
     break;
 
-  case 94: // mov_target: "exec"
+  case 95: // mov_target: "exec"
                  { yylhs.value.as < enum mov > () = mov::exec; }
     break;
 
-  case 95: // mov_target: "pc"
+  case 96: // mov_target: "pc"
                  { yylhs.value.as < enum mov > () = mov::pc; }
     break;
 
-  case 96: // mov_target: "isr"
+  case 97: // mov_target: "isr"
                  { yylhs.value.as < enum mov > () = mov::isr; }
     break;
 
-  case 97: // mov_target: "osr"
+  case 98: // mov_target: "osr"
                  { yylhs.value.as < enum mov > () = mov::osr; }
     break;
 
-  case 98: // mov_source: "pins"
+  case 99: // mov_source: "pins"
                  { yylhs.value.as < enum mov > () = mov::pins; }
     break;
 
-  case 99: // mov_source: "x"
+  case 100: // mov_source: "x"
                  { yylhs.value.as < enum mov > () = mov::x; }
     break;
 
-  case 100: // mov_source: "y"
+  case 101: // mov_source: "y"
                  { yylhs.value.as < enum mov > () = mov::y; }
     break;
 
-  case 101: // mov_source: "null"
+  case 102: // mov_source: "null"
                  { yylhs.value.as < enum mov > () = mov::null; }
     break;
 
-  case 102: // mov_source: "status"
+  case 103: // mov_source: "status"
                  { yylhs.value.as < enum mov > () = mov::status; }
     break;
 
-  case 103: // mov_source: "isr"
+  case 104: // mov_source: "isr"
                  { yylhs.value.as < enum mov > () = mov::isr; }
     break;
 
-  case 104: // mov_source: "osr"
+  case 105: // mov_source: "osr"
                  { yylhs.value.as < enum mov > () = mov::osr; }
     break;
 
-  case 105: // mov_op: "!"
+  case 106: // mov_op: "!"
                 { yylhs.value.as < enum mov_op > () = mov_op::invert; }
     break;
 
-  case 106: // mov_op: "::"
+  case 107: // mov_op: "::"
                 { yylhs.value.as < enum mov_op > () = mov_op::bit_reverse; }
     break;
 
-  case 107: // mov_op: %empty
+  case 108: // mov_op: %empty
                 { yylhs.value.as < enum mov_op > () = mov_op::none; }
     break;
 
-  case 108: // set_target: "pins"
+  case 109: // set_target: "pins"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_pins; }
     break;
 
-  case 109: // set_target: "x"
+  case 110: // set_target: "x"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_x; }
     break;
 
-  case 110: // set_target: "y"
+  case 111: // set_target: "y"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_y; }
     break;
 
-  case 111: // set_target: "pindirs"
+  case 112: // set_target: "pindirs"
                 { yylhs.value.as < enum in_out_set > () = in_out_set::in_out_set_pindirs; }
     break;
 
-  case 112: // if_full: "iffull"
+  case 113: // if_full: "iffull"
            { yylhs.value.as < bool > () = true; }
     break;
 
-  case 113: // if_full: %empty
+  case 114: // if_full: %empty
            { yylhs.value.as < bool > () = false; }
     break;
 
-  case 114: // if_empty: "ifempty"
+  case 115: // if_empty: "ifempty"
             { yylhs.value.as < bool > () = true; }
     break;
 
-  case 115: // if_empty: %empty
+  case 116: // if_empty: %empty
             { yylhs.value.as < bool > () = false; }
     break;
 
-  case 116: // blocking: "block"
+  case 117: // blocking: "block"
             { yylhs.value.as < bool > () = true; }
     break;
 
-  case 117: // blocking: "noblock"
+  case 118: // blocking: "noblock"
             { yylhs.value.as < bool > () = false; }
     break;
 
-  case 118: // blocking: %empty
+  case 119: // blocking: %empty
             { yylhs.value.as < bool > () = true; }
     break;
 
-  case 119: // irq_modifiers: "clear"
+  case 120: // irq_modifiers: "clear"
                    { yylhs.value.as < enum irq > () = irq::clear; }
     break;
 
-  case 120: // irq_modifiers: "wait"
+  case 121: // irq_modifiers: "wait"
                    { yylhs.value.as < enum irq > () = irq::set_wait; }
     break;
 
-  case 121: // irq_modifiers: "nowait"
+  case 122: // irq_modifiers: "nowait"
                    { yylhs.value.as < enum irq > () = irq::set; }
     break;
 
-  case 122: // irq_modifiers: "set"
+  case 123: // irq_modifiers: "set"
                    { yylhs.value.as < enum irq > () = irq::set; }
     break;
 
-  case 123: // irq_modifiers: %empty
+  case 124: // irq_modifiers: %empty
                    { yylhs.value.as < enum irq > () = irq::set; }
     break;
 
-  case 124: // symbol_def: "identifier"
+  case 125: // symbol_def: "identifier"
                     { yylhs.value.as < std::shared_ptr<symbol> > () = std::shared_ptr<symbol>(new symbol(yylhs.location, yystack_[0].value.as < std::string > ())); }
     break;
 
-  case 125: // symbol_def: "public" "identifier"
+  case 126: // symbol_def: "public" "identifier"
                     { yylhs.value.as < std::shared_ptr<symbol> > () = std::shared_ptr<symbol>(new symbol(yylhs.location, yystack_[0].value.as < std::string > (), true)); }
     break;
 
-  case 126: // symbol_def: "*" "identifier"
+  case 127: // symbol_def: "*" "identifier"
                     { yylhs.value.as < std::shared_ptr<symbol> > () = std::shared_ptr<symbol>(new symbol(yylhs.location, yystack_[0].value.as < std::string > (), true)); }
     break;
 
@@ -1924,124 +1928,124 @@ namespace yy {
   }
 
 
-  const signed char parser::yypact_ninf_ = -52;
+  const signed char parser::yypact_ninf_ = -47;
 
   const signed char parser::yytable_ninf_ = -12;
 
   const short
   parser::yypact_[] =
   {
-       3,   -52,   -41,   -39,   -52,   -52,    -3,     5,     5,     5,
-       7,    44,    10,     0,   101,    18,    30,    94,    51,    50,
-     -52,    20,   -52,    13,   -52,    88,    17,   -52,   -52,   129,
-     -52,   -52,     2,    85,   -52,   -52,     1,     1,   -52,   -52,
-      40,   -52,   -52,   -52,    42,    58,   -52,    28,    96,   120,
-     120,   120,   120,    15,   -52,   -52,   -52,   -52,   -52,   -52,
-     -52,   -52,   120,   -52,   -52,   -52,   -52,   -52,   -52,   -52,
-     -52,   120,   -52,    63,   -52,    63,   -52,   -52,   -52,   -52,
-     -52,   -52,   -52,   120,   -52,   -52,   -52,   -52,     5,   -52,
-     -52,   -52,   -52,   120,   -52,   -52,   -52,   -52,     3,   -52,
-       1,     5,    45,   130,   -52,     1,     1,   -52,   177,   162,
-     -52,    97,   132,   -52,   -52,   -52,   -52,    87,   -52,   -52,
-       1,     5,     5,     5,     5,   -52,     5,     5,   -52,   -52,
-     -52,   -52,    29,   118,     5,   -52,   170,   -52,   -52,   -52,
-     182,   177,     1,     1,     1,     1,     1,     1,     1,   -52,
-     -52,   -51,   -52,   177,   119,   -52,   -52,   -52,   -52,   -52,
-     -52,   -52,    82,   -52,   -52,   -52,   182,   182,   107,   107,
-     -52,   -52,   -52,   -52,   -52,   -52,   -52,   -52,   -52,   -52,
-     -52,   -52,   -52,   -52,   -52
+       7,   -47,   -46,   -43,   -47,   -47,    -1,    14,    14,    14,
+       3,   -17,    38,    11,    88,   114,     1,    12,   -31,    56,
+     119,   -47,    16,   -47,    17,   -47,    68,     9,   -47,   -47,
+     144,   -47,   -47,    -3,   115,   -47,   -47,    71,    71,   -47,
+     -47,     4,   -47,   -47,   -47,    57,   -47,    43,   -47,    37,
+     113,   127,   127,   127,   127,    18,   -47,   -47,   -47,   -47,
+     -47,   -47,   -47,   -47,   127,   -47,   -47,   -47,   -47,   -47,
+     -47,   -47,   -47,   127,   -47,    80,   -47,    80,   -47,   -47,
+     -47,   -47,   -47,   -47,   -47,   127,   -47,   -47,   -47,   -47,
+      14,   -47,   -47,   -47,   -47,   127,   -47,   -47,   -47,   -47,
+       7,   -47,    71,    14,    73,   129,   -47,    71,    71,   -47,
+     185,   178,   -47,    98,   130,   -47,   -47,   -47,   -47,    85,
+     -47,   -47,    71,    14,    14,    14,    14,   -47,    14,    14,
+     -47,   -47,   -47,   -47,    46,   101,    14,   -47,    90,   -47,
+     -47,   -47,   190,   185,    71,    71,    71,    71,    71,    71,
+      71,   -47,   -47,    24,   -47,   185,   102,   -47,   -47,   -47,
+     -47,   -47,   -47,   -47,    94,   -47,   -47,   -47,   190,   190,
+       0,     0,   -47,   -47,   -47,   -47,   -47,   -47,   -47,   -47,
+     -47,   -47,   -47,   -47,   -47,   -47,   -47
   };
 
   const signed char
   parser::yydefact_[] =
   {
        0,    12,     0,     0,    21,    22,     0,     0,     0,     0,
-       0,    69,     0,     0,     0,   113,   115,     0,   123,     0,
-      47,     0,   124,     0,    28,     0,     0,     3,    10,     9,
-       6,     7,    46,     0,   126,     5,     0,     0,    30,    29,
-      20,    23,    16,    27,     0,     0,    67,     0,     0,    75,
-      75,    75,    75,     0,    51,    76,    79,    77,    78,    80,
-      81,    82,    75,    83,    86,    87,    84,    85,    90,    89,
-      88,    75,   112,   118,   114,   118,    91,    92,    93,    94,
-      95,    96,    97,    75,   120,   122,   121,   119,     0,   108,
-     111,   109,   110,    75,   125,    13,     1,     2,     0,     8,
-       0,     0,    45,    44,    14,     0,     0,    32,    15,     0,
-      19,    18,     0,    68,    62,    64,    63,     0,    65,    74,
-       0,     0,     0,     0,     0,    49,     0,     0,   116,   117,
-      54,    55,   107,    58,     0,     4,     0,    61,    43,    42,
-      40,    41,     0,     0,     0,     0,     0,     0,     0,    31,
-      17,     0,    66,    48,    71,    73,    72,    50,    52,    53,
-     105,   106,     0,    57,    59,    60,    33,    34,    35,    36,
-      37,    38,    39,    25,    26,    24,    70,    98,   101,    99,
-     100,   103,   104,   102,    56
+       0,     0,    70,     0,     0,     0,   114,   116,     0,   124,
+       0,    48,     0,   125,     0,    29,     0,     0,     3,    10,
+       9,     6,     7,    47,     0,   127,     5,     0,     0,    31,
+      30,    20,    23,    16,    27,     0,    28,     0,    68,     0,
+       0,    76,    76,    76,    76,     0,    52,    77,    80,    78,
+      79,    81,    82,    83,    76,    84,    87,    88,    85,    86,
+      91,    90,    89,    76,   113,   119,   115,   119,    92,    93,
+      94,    95,    96,    97,    98,    76,   121,   123,   122,   120,
+       0,   109,   112,   110,   111,    76,   126,    13,     1,     2,
+       0,     8,     0,     0,    46,    45,    14,     0,     0,    33,
+      15,     0,    19,    18,     0,    69,    63,    65,    64,     0,
+      66,    75,     0,     0,     0,     0,     0,    50,     0,     0,
+     117,   118,    55,    56,   108,    59,     0,     4,     0,    62,
+      44,    43,    41,    42,     0,     0,     0,     0,     0,     0,
+       0,    32,    17,     0,    67,    49,    72,    74,    73,    51,
+      53,    54,   106,   107,     0,    58,    60,    61,    34,    35,
+      36,    37,    38,    39,    40,    25,    26,    24,    71,    99,
+     102,   100,   101,   104,   105,   103,    57
   };
 
   const short
   parser::yypgoto_[] =
   {
-     -52,   -52,   -52,   102,   -52,   -52,   -52,    -7,   -14,   172,
-     -52,    99,   103,   -52,   146,    25,   -52,   -52,   -52,   -52,
-     -52,   -52,   -52,   -52,   128,   -52,   198
+     -47,   -47,   -47,    61,   -47,   -47,   -47,    -7,   -35,   132,
+     -47,    59,    62,   -47,   131,    72,   -47,   -47,   -47,   -47,
+     -47,   -47,   -47,   -47,   110,   -47,   201
   };
 
-  const short
+  const unsigned char
   parser::yydefgoto_[] =
   {
-      -1,    25,    26,    27,    28,    29,    30,   107,   108,    31,
-      32,   102,   103,    49,    54,   120,    62,    71,    83,   184,
-     162,    93,    73,    75,   130,    88,    33
+       0,    26,    27,    28,    29,    30,    31,   109,   110,    32,
+      33,   104,   105,    51,    56,   122,    64,    73,    85,   186,
+     164,    95,    75,    77,   132,    90,    34
   };
 
   const short
   parser::yytable_[] =
   {
-      40,    41,    42,   -11,     1,    53,   -11,    37,    43,     2,
-     100,    37,   105,   173,   174,     2,    37,    97,   175,   124,
-      98,   106,    34,   109,    35,     3,     4,     5,     6,     7,
-       8,     9,    10,    11,    12,    13,    14,    15,    16,    17,
-      18,    19,    20,    55,    56,   116,   117,    50,   160,   161,
-      51,    52,    50,    57,    58,    51,    52,    59,    60,    21,
-      22,    61,   101,    45,    38,    21,    22,    72,    38,    23,
-      39,    24,    44,    38,    39,   121,   122,   123,    74,    39,
-      95,   133,    84,    94,    46,   110,   136,   126,    96,    85,
-     104,   140,   141,    89,   137,    90,   127,    47,    48,   111,
-     113,    86,    87,    91,    92,   101,   153,   112,   132,   128,
-     129,   114,   115,   118,   154,   155,   156,   157,   134,   158,
-     159,   146,   147,   148,   119,   177,   178,   164,   166,   167,
-     168,   169,   170,   171,   172,   179,   180,    76,   100,   181,
-     182,   152,   150,   183,    63,    64,    65,    77,    78,    79,
-      80,    81,    82,   151,    66,    67,    68,    69,    70,    11,
-      12,    13,    14,    15,    16,    17,    18,    19,    20,   149,
-     163,   176,   142,   143,   144,   145,   146,   147,   148,   165,
-     142,   143,   144,   145,   146,   147,   148,   142,   143,   144,
-     145,   146,   147,   148,   144,   145,   146,   147,   148,   125,
-     135,    99,   139,   131,    36,   138
+      41,    42,    43,   111,    44,   102,    55,   -11,     1,    99,
+     -11,     2,   100,    78,   148,   149,   150,    38,    35,     2,
+      38,    36,   126,    79,    80,    81,    82,    83,    84,     3,
+       4,     5,     6,     7,     8,     9,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,    21,    46,    52,
+     112,    74,    53,    54,   118,   119,    52,    47,   103,    53,
+      54,    76,    22,    23,   113,   162,   163,   138,    98,    45,
+      22,    23,   142,   143,    24,    39,    25,    38,    39,    48,
+      96,    40,   107,   135,    40,    97,   115,   155,    86,   175,
+     176,   108,    49,    50,   177,    87,   139,   116,   117,   167,
+     144,   145,   146,   147,   148,   149,   150,    88,    89,   168,
+     169,   170,   171,   172,   173,   174,   156,   157,   158,   159,
+     106,   160,   161,   114,   123,   124,   125,   130,   131,   166,
+     120,   121,    57,    58,   103,    39,   128,   102,   179,   180,
+     154,    40,    59,    60,   152,   129,    61,    62,   181,   182,
+      63,   153,   183,   184,   165,   178,   185,   134,    65,    66,
+      67,   137,   101,    91,   141,    92,   140,   136,    68,    69,
+      70,    71,    72,    93,    94,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    21,   151,   127,   133,   144,   145,
+     146,   147,   148,   149,   150,   144,   145,   146,   147,   148,
+     149,   150,   146,   147,   148,   149,   150,    37
   };
 
   const unsigned char
   parser::yycheck_[] =
   {
-       7,     8,     9,     0,     1,    12,     3,     6,     1,    12,
-       8,     6,    11,    64,    65,    12,     6,     0,    69,     4,
-       3,    20,    63,    37,    63,    22,    23,    24,    25,    26,
-      27,    28,    29,    30,    31,    32,    33,    34,    35,    36,
-      37,    38,    39,    43,    44,    17,    18,    37,    19,    20,
-      40,    41,    37,    53,    54,    40,    41,    57,    58,    62,
-      63,    61,    60,    19,    63,    62,    63,    49,    63,    66,
-      69,    68,    65,    63,    69,    50,    51,    52,    48,    69,
-      67,    88,    31,    63,    40,    45,   100,    62,     0,    38,
-       5,   105,   106,    43,   101,    45,    71,    53,    54,    59,
-      42,    50,    51,    53,    54,    60,   120,    65,    83,    46,
-      47,    53,    54,    17,   121,   122,   123,   124,    93,   126,
-     127,    14,    15,    16,     4,    43,    44,   134,   142,   143,
-     144,   145,   146,   147,   148,    53,    54,    43,     8,    57,
-      58,    54,    45,    61,    43,    44,    45,    53,    54,    55,
-      56,    57,    58,    21,    53,    54,    55,    56,    57,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,     7,
-      52,    52,    10,    11,    12,    13,    14,    15,    16,     9,
-      10,    11,    12,    13,    14,    15,    16,    10,    11,    12,
-      13,    14,    15,    16,    12,    13,    14,    15,    16,    53,
-      98,    29,   103,    75,     6,   102
+       7,     8,     9,    38,     1,     8,    13,     0,     1,     0,
+       3,    12,     3,    44,    14,    15,    16,     6,    64,    12,
+       6,    64,     4,    54,    55,    56,    57,    58,    59,    22,
+      23,    24,    25,    26,    27,    28,    29,    30,    31,    32,
+      33,    34,    35,    36,    37,    38,    39,    40,    65,    38,
+      46,    50,    41,    42,    17,    18,    38,    19,    61,    41,
+      42,    49,    63,    64,    60,    19,    20,   102,     0,    66,
+      63,    64,   107,   108,    67,    64,    69,     6,    64,    41,
+      64,    70,    11,    90,    70,    68,    43,   122,    32,    65,
+      66,    20,    54,    55,    70,    39,   103,    54,    55,     9,
+      10,    11,    12,    13,    14,    15,    16,    51,    52,   144,
+     145,   146,   147,   148,   149,   150,   123,   124,   125,   126,
+       5,   128,   129,    66,    52,    53,    54,    47,    48,   136,
+      17,     4,    44,    45,    61,    64,    64,     8,    44,    45,
+      55,    70,    54,    55,    46,    73,    58,    59,    54,    55,
+      62,    21,    58,    59,    53,    53,    62,    85,    44,    45,
+      46,   100,    30,    44,   105,    46,   104,    95,    54,    55,
+      56,    57,    58,    54,    55,    31,    32,    33,    34,    35,
+      36,    37,    38,    39,    40,     7,    55,    77,    10,    11,
+      12,    13,    14,    15,    16,    10,    11,    12,    13,    14,
+      15,    16,    12,    13,    14,    15,    16,     6
   };
 
   const signed char
@@ -2049,41 +2053,41 @@ namespace yy {
   {
        0,     1,    12,    22,    23,    24,    25,    26,    27,    28,
       29,    30,    31,    32,    33,    34,    35,    36,    37,    38,
-      39,    62,    63,    66,    68,    71,    72,    73,    74,    75,
-      76,    79,    80,    96,    63,    63,    96,     6,    63,    69,
-      77,    77,    77,     1,    65,    19,    40,    53,    54,    83,
-      37,    40,    41,    77,    84,    43,    44,    53,    54,    57,
-      58,    61,    86,    43,    44,    45,    53,    54,    55,    56,
-      57,    87,    49,    92,    48,    93,    43,    53,    54,    55,
-      56,    57,    58,    88,    31,    38,    50,    51,    95,    43,
-      45,    53,    54,    91,    63,    67,     0,     0,     3,    79,
-       8,    60,    81,    82,     5,    11,    20,    77,    78,    78,
-      45,    59,    65,    42,    53,    54,    17,    18,    17,     4,
-      85,    85,    85,    85,     4,    84,    85,    85,    46,    47,
-      94,    94,    85,    77,    85,    73,    78,    77,    82,    81,
-      78,    78,    10,    11,    12,    13,    14,    15,    16,     7,
-      45,    21,    54,    78,    77,    77,    77,    77,    77,    77,
-      19,    20,    90,    52,    77,     9,    78,    78,    78,    78,
-      78,    78,    78,    64,    65,    69,    52,    43,    44,    53,
-      54,    57,    58,    61,    89
+      39,    40,    63,    64,    67,    69,    72,    73,    74,    75,
+      76,    77,    80,    81,    97,    64,    64,    97,     6,    64,
+      70,    78,    78,    78,     1,    66,    65,    19,    41,    54,
+      55,    84,    38,    41,    42,    78,    85,    44,    45,    54,
+      55,    58,    59,    62,    87,    44,    45,    46,    54,    55,
+      56,    57,    58,    88,    50,    93,    49,    94,    44,    54,
+      55,    56,    57,    58,    59,    89,    32,    39,    51,    52,
+      96,    44,    46,    54,    55,    92,    64,    68,     0,     0,
+       3,    80,     8,    61,    82,    83,     5,    11,    20,    78,
+      79,    79,    46,    60,    66,    43,    54,    55,    17,    18,
+      17,     4,    86,    86,    86,    86,     4,    85,    86,    86,
+      47,    48,    95,    95,    86,    78,    86,    74,    79,    78,
+      83,    82,    79,    79,    10,    11,    12,    13,    14,    15,
+      16,     7,    46,    21,    55,    79,    78,    78,    78,    78,
+      78,    78,    19,    20,    91,    53,    78,     9,    79,    79,
+      79,    79,    79,    79,    79,    65,    66,    70,    53,    44,
+      45,    54,    55,    58,    59,    62,    90
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,    70,    71,    72,    72,    73,    73,    73,    73,    73,
-      73,    73,    73,    74,    75,    76,    76,    76,    76,    76,
-      76,    76,    76,    76,    76,    76,    76,    76,    76,    77,
-      77,    77,    78,    78,    78,    78,    78,    78,    78,    78,
-      78,    78,    79,    79,    79,    79,    79,    80,    80,    80,
-      80,    80,    80,    80,    80,    80,    80,    80,    80,    80,
-      81,    82,    83,    83,    83,    83,    83,    83,    83,    83,
-      84,    84,    84,    84,    85,    85,    86,    86,    86,    86,
-      86,    86,    86,    87,    87,    87,    87,    87,    87,    87,
-      87,    88,    88,    88,    88,    88,    88,    88,    89,    89,
-      89,    89,    89,    89,    89,    90,    90,    90,    91,    91,
-      91,    91,    92,    92,    93,    93,    94,    94,    94,    95,
-      95,    95,    95,    95,    96,    96,    96
+       0,    71,    72,    73,    73,    74,    74,    74,    74,    74,
+      74,    74,    74,    75,    76,    77,    77,    77,    77,    77,
+      77,    77,    77,    77,    77,    77,    77,    77,    77,    77,
+      78,    78,    78,    79,    79,    79,    79,    79,    79,    79,
+      79,    79,    79,    80,    80,    80,    80,    80,    81,    81,
+      81,    81,    81,    81,    81,    81,    81,    81,    81,    81,
+      81,    82,    83,    84,    84,    84,    84,    84,    84,    84,
+      84,    85,    85,    85,    85,    86,    86,    87,    87,    87,
+      87,    87,    87,    87,    88,    88,    88,    88,    88,    88,
+      88,    88,    89,    89,    89,    89,    89,    89,    89,    90,
+      90,    90,    90,    90,    90,    90,    91,    91,    91,    92,
+      92,    92,    92,    93,    93,    94,    94,    95,    95,    95,
+      96,    96,    96,    96,    96,    97,    97,    97
   };
 
   const signed char
@@ -2091,17 +2095,17 @@ namespace yy {
   {
        0,     2,     2,     1,     3,     2,     1,     1,     2,     1,
        1,     0,     1,     2,     2,     3,     2,     4,     3,     3,
-       2,     1,     1,     2,     5,     5,     5,     2,     1,     1,
-       1,     3,     1,     3,     3,     3,     3,     3,     3,     3,
-       2,     2,     3,     3,     2,     2,     1,     1,     4,     3,
-       4,     2,     4,     4,     3,     3,     5,     4,     3,     4,
-       3,     2,     2,     2,     2,     2,     3,     1,     2,     0,
-       4,     3,     3,     3,     1,     0,     1,     1,     1,     1,
+       2,     1,     1,     2,     5,     5,     5,     2,     2,     1,
+       1,     1,     3,     1,     3,     3,     3,     3,     3,     3,
+       3,     2,     2,     3,     3,     2,     2,     1,     1,     4,
+       3,     4,     2,     4,     4,     3,     3,     5,     4,     3,
+       4,     3,     2,     2,     2,     2,     2,     3,     1,     2,
+       0,     4,     3,     3,     3,     1,     0,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     0,     1,     1,
-       1,     1,     1,     0,     1,     0,     1,     1,     0,     1,
-       1,     1,     1,     0,     1,     2,     2
+       1,     1,     1,     1,     1,     1,     1,     1,     0,     1,
+       1,     1,     1,     1,     0,     1,     0,     1,     1,     0,
+       1,     1,     1,     1,     0,     1,     2,     2
   };
 
 
@@ -2116,19 +2120,19 @@ namespace yy {
   "\"*\"", "\"/\"", "\"|\"", "\"&\"", "\"^\"", "\"--\"", "\"!=\"", "\"!\"",
   "\"::\"", "\"=\"", "\".program\"", "\".wrap_target\"", "\".wrap\"",
   "\".define\"", "\".side_set\"", "\".word\"", "\".origin\"",
-  "\".lang_opt\"", "\"jmp\"", "\"wait\"", "\"in\"", "\"out\"", "\"push\"",
-  "\"pull\"", "\"mov\"", "\"irq\"", "\"set\"", "\"nop\"", "\"pin\"",
-  "\"gpio\"", "\"osre\"", "\"pins\"", "\"null\"", "\"pindirs\"",
-  "\"block\"", "\"noblock\"", "\"ifempty\"", "\"iffull\"", "\"nowait\"",
-  "\"clear\"", "\"rel\"", "\"x\"", "\"y\"", "\"exec\"", "\"pc\"",
-  "\"isr\"", "\"osr\"", "\"opt\"", "\"side\"", "\"status\"", "\"public\"",
-  "\"identifier\"", "\"string\"", "\"text\"", "\"code block\"", "\"%}\"",
-  "UNKNOWN_DIRECTIVE", "\"integer\"", "$accept", "file", "lines", "line",
-  "code_block", "label_decl", "directive", "value", "expression",
-  "instruction", "base_instruction", "delay", "sideset", "condition",
-  "wait_source", "comma", "in_source", "out_target", "mov_target",
-  "mov_source", "mov_op", "set_target", "if_full", "if_empty", "blocking",
-  "irq_modifiers", "symbol_def", YY_NULLPTR
+  "\".lang_opt\"", "\".include\"", "\"jmp\"", "\"wait\"", "\"in\"",
+  "\"out\"", "\"push\"", "\"pull\"", "\"mov\"", "\"irq\"", "\"set\"",
+  "\"nop\"", "\"pin\"", "\"gpio\"", "\"osre\"", "\"pins\"", "\"null\"",
+  "\"pindirs\"", "\"block\"", "\"noblock\"", "\"ifempty\"", "\"iffull\"",
+  "\"nowait\"", "\"clear\"", "\"rel\"", "\"x\"", "\"y\"", "\"exec\"",
+  "\"pc\"", "\"isr\"", "\"osr\"", "\"opt\"", "\"side\"", "\"status\"",
+  "\"public\"", "\"identifier\"", "\"string\"", "\"text\"",
+  "\"code block\"", "\"%}\"", "UNKNOWN_DIRECTIVE", "\"integer\"",
+  "$accept", "file", "lines", "line", "code_block", "label_decl",
+  "directive", "value", "expression", "instruction", "base_instruction",
+  "delay", "sideset", "condition", "wait_source", "comma", "in_source",
+  "out_target", "mov_target", "mov_source", "mov_op", "set_target",
+  "if_full", "if_empty", "blocking", "irq_modifiers", "symbol_def", YY_NULLPTR
   };
 #endif
 
@@ -2137,19 +2141,19 @@ namespace yy {
   const short
   parser::yyrline_[] =
   {
-       0,   136,   136,   140,   141,   144,   145,   146,   147,   148,
-     149,   150,   151,   155,   159,   162,   163,   164,   165,   166,
-     167,   168,   169,   170,   171,   172,   173,   174,   175,   180,
-     181,   182,   186,   187,   188,   189,   190,   191,   192,   193,
-     194,   195,   199,   200,   201,   202,   203,   207,   208,   209,
-     210,   211,   212,   213,   214,   215,   216,   217,   218,   219,
-     224,   228,   232,   233,   234,   235,   236,   237,   238,   239,
-     243,   244,   245,   246,   248,   248,   251,   252,   253,   254,
-     255,   256,   257,   260,   261,   262,   263,   264,   265,   266,
-     267,   270,   271,   272,   273,   274,   275,   276,   279,   280,
-     281,   282,   283,   284,   285,   289,   290,   291,   295,   296,
-     297,   298,   302,   303,   307,   308,   312,   313,   314,   318,
-     319,   320,   321,   322,   326,   327,   328
+       0,   138,   138,   142,   143,   146,   147,   148,   149,   150,
+     151,   152,   153,   157,   161,   164,   165,   166,   167,   168,
+     169,   170,   171,   172,   173,   174,   175,   176,   177,   178,
+     183,   184,   185,   189,   190,   191,   192,   193,   194,   195,
+     196,   197,   198,   202,   203,   204,   205,   206,   210,   211,
+     212,   213,   214,   215,   216,   217,   218,   219,   220,   221,
+     222,   227,   231,   235,   236,   237,   238,   239,   240,   241,
+     242,   246,   247,   248,   249,   251,   251,   254,   255,   256,
+     257,   258,   259,   260,   263,   264,   265,   266,   267,   268,
+     269,   270,   273,   274,   275,   276,   277,   278,   279,   282,
+     283,   284,   285,   286,   287,   288,   292,   293,   294,   298,
+     299,   300,   301,   305,   306,   310,   311,   315,   316,   317,
+     321,   322,   323,   324,   325,   329,   330,   331
   };
 
   void
@@ -2205,4 +2209,3 @@ void yy::parser::error(const location_type& l, const std::string& m)
       std::cerr << m << '\n';
   }
 }
-

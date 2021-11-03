@@ -22,6 +22,7 @@
   #include <string>
   #include <fstream>
   #include <sstream>
+  #include <cstring>
   #include "pio_types.h"
   struct pio_assembler;
 
@@ -74,6 +75,7 @@
     WORD            ".word"
     ORIGIN          ".origin"
     LANG_OPT        ".lang_opt"
+    INCLUDE	    ".include"
 
     JMP             "jmp"
     WAIT            "wait"
@@ -133,7 +135,7 @@
 %%
 
 file:
-    lines END { if (pioasm.error_count || pioasm.write_output()) YYABORT; }
+    lines END { if (pioasm.error_count || pioasm.write_output()) YYABORT; YYACCEPT; }
     ;
 
 lines:
@@ -172,6 +174,7 @@ directive:
   | LANG_OPT NON_WS NON_WS EQUAL STRING { pioasm.get_current_program(@1, ".lang_opt").add_lang_opt($2, $3, $5); }
   | LANG_OPT NON_WS NON_WS EQUAL NON_WS { pioasm.get_current_program(@1, ".lang_opt").add_lang_opt($2, $3, $5); }
   | LANG_OPT error                    { error(@$, "expected format is .lang_opt language option_name = option_value"); }
+  | INCLUDE STRING		      { pioasm.include_file($2); }
   | UNKNOWN_DIRECTIVE                 { std::stringstream msg; msg << "unknown directive " << $1; throw syntax_error(@$, msg.str()); }
   ;
 
@@ -350,4 +353,3 @@ void yy::parser::error(const location_type& l, const std::string& m)
       std::cerr << m << '\n';
   }
 }
-
